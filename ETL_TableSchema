@@ -1,0 +1,54 @@
+CREATE TABLE counties(
+	county_code INT PRIMARY KEY,
+	county VARCHAR(50)
+);
+
+CREATE TABLE sites(
+	site_code INT PRIMARY KEY,
+	site VARCHAR(250)
+);
+
+CREATE TABLE addresses(
+	site_code INT,
+	address VARCHAR(250),
+	city VARCHAR(100),
+	FOREIGN KEY (site_code) REFERENCES sites(site_code)
+);
+
+CREATE TABLE parameters(
+	parameter_code INT PRIMARY KEY,
+	parameter VARCHAR(50)
+);
+
+CREATE TABLE air_quality(
+	county_code INT,
+	site_code INT,
+	parameter_code INT,
+	year INT,
+	latitude DECIMAL,
+	longitude DECIMAL,
+	sample_duration VARCHAR(100),
+	pollutant_standard VARCHAR(100),
+	metric_used VARCHAR(250),
+	units VARCHAR(250),
+	arithmetic_mean DECIMAL,
+	first_max_value DECIMAL,
+	second_max_value DECIMAL,
+	FOREIGN KEY (county_code) REFERENCES counties(county_code),
+	FOREIGN KEY (site_code) REFERENCES sites(site_code),
+	FOREIGN KEY (parameter_code) REFERENCES parameters(parameter_code)
+);
+
+CREATE TABLE gas_data(
+	county VARCHAR(50),
+	year INT,
+	total_VMT BIGINT,
+	gas_consumption INT
+);
+
+CREATE TABLE diesel_data(
+	county VARCHAR(50),
+	year INT,
+	total_VMT BIGINT,
+	diesel_consumption INT
+);
